@@ -4,18 +4,20 @@ from faker import Faker
 fake = Faker()
 
 conn = psycopg2.connect(
-    host="localhost",
-    port=5432,
-    database="postgres",
-    user="postgres",
-    password="415263"
+      host="localhost"
+    , port=5432
+    , database="postgres"
+    , user="postgres"
+    , password="password"
 )
 cur = conn.cursor()
 
 statuses = [("new",), ("in progress",), ("completed",)]
 
 for i in range(1, 11):
-    cur.execute('INSERT INTO users (fullname, email) VALUES (%s, %s)', (fake.name(), fake.email()))
+    cur.execute('INSERT INTO users (fullname, email) VALUES (%s, %s)'
+                , (fake.name()
+                , fake.email()))
 
 for status in statuses:
     cur.execute('INSERT INTO status (name) VALUES (%s)', (status,))
