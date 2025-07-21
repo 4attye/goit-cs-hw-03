@@ -29,3 +29,4 @@ for i in range(1, 31):
 
 conn.commit()
 conn.close()
+cur.close()
