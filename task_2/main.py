@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
-<<<<<<< HEAD
 
 try:
     client = MongoClient(
@@ -12,12 +11,6 @@ try:
 except Exception as e:
     print(f"Помилка підключення до MongoDB: {e}")
     exit(1)
-=======
-client = MongoClient(
-    "mongodb+srv://4attye:<password>@clusters.s150f.mongodb.net/",
-    server_api=ServerApi('1')
-)
->>>>>>> 096f162124f53edc569a65f896ee437424330453
 
 db = client.animals
 
