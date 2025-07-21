@@ -35,7 +35,7 @@ WHERE email LIKE '%@example.com';
 
 
 UPDATE users
-SET fullname = 'Updated User'
+SET fullname = 'User Name'
 WHERE id = 2;
 
 

@@ -1,21 +1,31 @@
-import sqlite3 as sql
+import psycopg2
 from faker import Faker
 
 fake = Faker()
 
-con = sql.connect('task_1/database.sqlite')
-cur = con.cursor()
+conn = psycopg2.connect(
+    host="localhost",
+    port=5432,
+    database="postgres",
+    user="postgres",
+    password="415263"
+)
+cur = conn.cursor()
 
 statuses = [("new",), ("in progress",), ("completed",)]
 
 for i in range(1, 11):
-    cur.execute('INSERT INTO users (id, fullname, email) VALUES (?, ?, ?)', (i, fake.name(), fake.email()))
+    cur.execute('INSERT INTO users (fullname, email) VALUES (%s, %s)', (fake.name(), fake.email()))
 
-for i, values in enumerate(statuses, start=1):
-    cur.execute('INSERT INTO status (id, name) VALUES (?, ?)', (i, values[0]))
+for status in statuses:
+    cur.execute('INSERT INTO status (name) VALUES (%s)', (status,))
 
 for i in range(1, 31):
-    cur.execute('INSERT INTO tasks (id, title, description, status_id, user_id) VALUES (?, ?, ?, ?, ?)', (i, fake.sentence(), fake.text(), fake.random_int(1, 3), fake.random_int(1, 10)))
+    cur.execute('INSERT INTO tasks (title, description, status_id, user_id) VALUES ( %s, %s, %s, %s)', (
+        fake.sentence()
+        , fake.text()
+        , fake.random_int(1, 3)
+        , fake.random_int(1, 10)))
 
-con.commit()
-con.close()
+conn.commit()
+conn.close()
