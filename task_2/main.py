@@ -8,11 +8,17 @@ try:
         server_api=ServerApi('1')
     )
     client.admin.command('ping')
+    print("Підключення до MongoDB успішне.")
 except Exception as e:
     print(f"Помилка підключення до MongoDB: {e}")
     exit(1)
 
-db = client.animals
+db_name = "animals"
+db = client[db_name]
+
+if db_name not in client.list_database_names():
+    print(f"База даних '{db_name}' не існує.")
+    exit(1)
 
 
 def show_all(database):
